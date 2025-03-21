@@ -1,9 +1,18 @@
-[gd_scene load_steps=6 format=4 uid="uid://ccai5hkktaby8"]
+[gd_scene load_steps=9 format=4 uid="uid://ccai5hkktaby8"]
 
 [ext_resource type="TileSet" uid="uid://c5vn8ssbo81re" path="res://resources/icons.tres" id="1_80nbo"]
 [ext_resource type="PackedScene" uid="uid://dffdw0nwr254c" path="res://scenes/puck.tscn" id="2_e2o6t"]
 [ext_resource type="PackedScene" uid="uid://16wsw5ovjykh" path="res://scenes/player.tscn" id="3_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://bgpvlmq4vqp8p" path="res://resources/iconsDefault.png" id="4_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://5l5nv5retskt" path="res://scenes/charge_circle.tscn" id="5_iywne"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p57ef"]
+atlas = ExtResource("4_lbhrr")
+region = Rect2(832, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u5sy4"]
+atlas = ExtResource("4_lbhrr")
+region = Rect2(832, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iywne"]
 atlas = ExtResource("4_lbhrr")
@@ -23,33 +32,70 @@ position = Vector2(32, 32)
 tile_set = ExtResource("1_80nbo")
 collision_enabled = false
 
+[node name="Goals" type="TileMapLayer" parent="MapLayers"]
+tile_set = ExtResource("1_80nbo")
+
 [node name="Puck" parent="." instance=ExtResource("2_e2o6t")]
 position = Vector2(352, 224)
 
 [node name="Player" parent="." instance=ExtResource("3_lnu2h")]
 position = Vector2(128, 224)
+rotation = 3.14159
 
 [node name="Player2" parent="." instance=ExtResource("3_lnu2h")]
 position = Vector2(576, 224)
 player2 = true
 
-[node name="Button" type="Button" parent="."]
+[node name="UI" type="Control" parent="."]
+custom_minimum_size = Vector2(704, 32)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = 704.0
+offset_bottom = 14.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ChargeCircle" parent="UI" instance=ExtResource("5_iywne")]
+layout_mode = 0
+rotation = 1.5708
+pivot_offset = Vector2(20, 20)
+texture = SubResource("AtlasTexture_p57ef")
+
+[node name="ChargeCircle2" parent="UI" instance=ExtResource("5_iywne")]
+layout_mode = 0
+offset_left = 656.0
+offset_right = 696.0
+rotation = -1.5708
+pivot_offset = Vector2(20, 20)
+texture = SubResource("AtlasTexture_u5sy4")
+player2 = true
+
+[node name="Button" type="Button" parent="UI"]
 texture_filter = 1
-offset_top = 208.0
-offset_right = 72.0
-offset_bottom = 280.0
+layout_mode = 0
+offset_left = -16.0
+offset_top = 384.0
+offset_right = 56.0
+offset_bottom = 456.0
+rotation = 1.5708
 scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(36, 36)
 icon = SubResource("AtlasTexture_iywne")
 flat = true
 metadata/_edit_group_ = true
 
-[node name="Button2" type="Button" parent="."]
+[node name="Button2" type="Button" parent="UI"]
 texture_filter = 1
-offset_left = 672.0
-offset_top = 208.0
-offset_right = 744.0
-offset_bottom = 280.0
+layout_mode = 0
+offset_left = 640.0
+offset_top = 384.0
+offset_right = 712.0
+offset_bottom = 456.0
+rotation = -1.5708
 scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(36, 36)
 icon = SubResource("AtlasTexture_iywne")
 flat = true
 metadata/_edit_group_ = true

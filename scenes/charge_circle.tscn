@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://5l5nv5retskt"]
+
+[ext_resource type="Texture2D" uid="uid://bgpvlmq4vqp8p" path="res://resources/iconsDefault.png" id="1_2t5dh"]
+[ext_resource type="Script" uid="uid://bnjrld5c0uwbf" path="res://scripts/charge_circle.gd" id="2_b2qm5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lbhrr"]
+atlas = ExtResource("1_2t5dh")
+region = Rect2(832, 64, 64, 64)
+
+[node name="ChargeCircle" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("AtlasTexture_lbhrr")
+expand_mode = 4
+script = ExtResource("2_b2qm5")

@@ -7,8 +7,8 @@ extends CharacterBody2D
 var shot_enabled = false
 var shot_charge := 0.0
 
-@onready var button:Button = $"../Button"
-@onready var button2:Button = $"../Button2"
+@onready var button:Button = $"../UI/Button"
+@onready var button2:Button = $"../UI/Button2"
 
 var dimensions: Rect2
 
@@ -55,12 +55,10 @@ func handle_input_dir():
 		for touch_position in touch_events:
 			var touch_val = touch_events[touch_position]
 			if coord_val.has_point(touch_val.position) and touch_val.pressed:
-				# now we do some stuff with it
 				match coord:
 					"top_left":
 						if not player2:
 							move_dir = -1
-						# player 1 paddle movement
 						pass
 					"bottom_left":
 						if not player2:

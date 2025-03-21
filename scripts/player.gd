@@ -72,16 +72,12 @@ func handle_input_dir():
 	return move_dir
 
 func _input(event: InputEvent):
-	
 	if event is InputEventScreenDrag:
-		var index: int = event.index
-		var target = 'p1' if index == 0 else 'p2'
+		var target = 'p1' if event.index == 0 else 'p2'
 		touch_events[target].position = event.position
-		pass
 	
 	if event is InputEventScreenTouch:
-		var index: int = event.index
-		var target = 'p1' if index == 0 else 'p2'
+		var target = 'p1' if event.index == 0 else 'p2'
 		touch_events[target].pressed = event.pressed
 	pass
 

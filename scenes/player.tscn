@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://16wsw5ovjykh"]
+[gd_scene load_steps=6 format=3 uid="uid://16wsw5ovjykh"]
 
 [ext_resource type="Texture2D" uid="uid://bgpvlmq4vqp8p" path="res://resources/iconsDefault.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://dnlk1d3gh2fbf" path="res://scripts/player.gd" id="1_g2els"]
@@ -6,8 +6,14 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yqjtg"]
 size = Vector2(10, 64)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
+size = Vector2(16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
+size = Vector2(16, 32)
+
 [node name="Player" type="CharacterBody2D"]
-collision_layer = 3
+collision_mask = 10
 motion_mode = 1
 script = ExtResource("1_g2els")
 touch_controls = true
@@ -21,3 +27,23 @@ scale = Vector2(0.15, 1)
 texture = ExtResource("1_3vyb7")
 region_enabled = true
 region_rect = Rect2(1280, 128, 64, 64)
+
+[node name="TopHitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopHitbox"]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_g2els")
+
+[node name="BottomHitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+collision_priority = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomHitbox"]
+position = Vector2(0, 16)
+shape = SubResource("RectangleShape2D_qhqgy")
+
+[connection signal="body_entered" from="TopHitbox" to="." method="_on_top_hitbox_body_entered"]
+[connection signal="body_entered" from="BottomHitbox" to="." method="_on_bottom_hitbox_body_entered"]

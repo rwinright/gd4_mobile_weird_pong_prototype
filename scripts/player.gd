@@ -10,6 +10,8 @@ var shot_charge := 0.0
 @onready var button:Button = $"../Button"
 @onready var button2:Button = $"../Button2"
 
+var dimensions: Rect2
+
 var touch_events = {
 	"p1": {
 		"position": Vector2(),
@@ -26,9 +28,13 @@ func _ready():
 	var p2handle_fire = func(): return handle_fire(true)
 	button.pressed.connect(p1handle_fire)
 	button2.pressed.connect(p2handle_fire)
+	
+	#might need this
+	dimensions = $CollisionShape2D.shape.get_rect()
 
 func _physics_process(delta):
 	velocity.y = handle_input_dir() * speed * delta
+	velocity.x = 0
 	move_and_slide()
 
 func handle_input_dir():
@@ -96,3 +102,13 @@ func handle_fire(p2):
 	else:
 		print("Fire2")
 	pass
+
+
+func _on_top_hitbox_body_entered(body):
+	body.offset_dir = -1
+	pass # Replace with function body.
+
+
+func _on_bottom_hitbox_body_entered(body):
+	body.offset_dir = 1
+	pass # Replace with function body.

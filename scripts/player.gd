@@ -7,6 +7,9 @@ extends CharacterBody2D
 var shot_enabled = false
 var shot_charge := 0.0
 
+@onready var button:Button = $"../Button"
+@onready var button2:Button = $"../Button2"
+
 var touch_events = {
 	"p1": {
 		"position": Vector2(),
@@ -17,6 +20,12 @@ var touch_events = {
 		"pressed": false
 	},
 }
+
+func _ready():
+	var p1handle_fire = func(): return handle_fire(false)
+	var p2handle_fire = func(): return handle_fire(true)
+	button.pressed.connect(p1handle_fire)
+	button2.pressed.connect(p2handle_fire)
 
 func _physics_process(delta):
 	velocity.y = handle_input_dir() * speed * delta
@@ -80,9 +89,10 @@ func _input(event: InputEvent):
 		var target = 'p1' if event.index == 0 else 'p2'
 		touch_events[target].pressed = event.pressed
 	pass
-
-func _on_button_pressed():
-	if not player2:
-		print_debug("FIRING DA LAZA")
-		shot_enabled = true
-	pass # Replace with function body.
+	
+func handle_fire(p2):
+	if not p2:
+		print("Fire")
+	else:
+		print("Fire2")
+	pass

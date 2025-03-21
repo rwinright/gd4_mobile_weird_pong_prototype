@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=4 uid="uid://ccai5hkktaby8"]
+
+[ext_resource type="TileSet" uid="uid://c5vn8ssbo81re" path="res://resources/icons.tres" id="1_80nbo"]
+[ext_resource type="PackedScene" uid="uid://dffdw0nwr254c" path="res://scenes/puck.tscn" id="2_e2o6t"]
+[ext_resource type="PackedScene" uid="uid://16wsw5ovjykh" path="res://scenes/player.tscn" id="3_lnu2h"]
+[ext_resource type="Texture2D" uid="uid://bgpvlmq4vqp8p" path="res://resources/iconsDefault.png" id="4_lbhrr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iywne"]
+atlas = ExtResource("4_lbhrr")
+region = Rect2(768, 64, 64, 64)
+
+[node name="Game" type="Node2D"]
+
+[node name="MapLayers" type="Node" parent="."]
+
+[node name="Walls" type="TileMapLayer" parent="MapLayers"]
+position = Vector2(32, 32)
+tile_map_data = PackedByteArray("AAAAAAAAAAADAAEAAAAAAAEAAAADAAEAAAABAAAAAAADAAEAAAACAAAAAAADAAEAAAADAAAAAAADAAEAAAAEAAAAAAADAAEAAAAFAAAAAAADAAEAAAAGAAAAAAADAAEAAAAHAAAAAAADAAEAAAAIAAAAAAADAAEAAAAJAAAAAAADAAEAAAAJAAEAAAADAAEAAAAAAAQAAAADAAEAAAAAAAUAAAADAAEAAAABAAUAAAADAAEAAAACAAUAAAADAAEAAAADAAUAAAADAAEAAAAEAAUAAAADAAEAAAAFAAUAAAADAAEAAAAGAAUAAAADAAEAAAAHAAUAAAADAAEAAAAIAAUAAAADAAEAAAAJAAQAAAADAAEAAAAJAAUAAAADAAEAAAAAAAIAAAADAAEAAAAAAAMAAAADAAEAAAAJAAIAAAADAAEAAAAJAAMAAAADAAEAAAA=")
+tile_set = ExtResource("1_80nbo")
+
+[node name="Foreground" type="TileMapLayer" parent="MapLayers"]
+position = Vector2(32, 32)
+tile_set = ExtResource("1_80nbo")
+collision_enabled = false
+
+[node name="Puck" parent="." instance=ExtResource("2_e2o6t")]
+position = Vector2(352, 224)
+
+[node name="Player" parent="." instance=ExtResource("3_lnu2h")]
+position = Vector2(128, 224)
+
+[node name="Player2" parent="." instance=ExtResource("3_lnu2h")]
+position = Vector2(576, 224)
+player2 = true
+
+[node name="Button" type="Button" parent="."]
+texture_filter = 1
+offset_top = 208.0
+offset_right = 72.0
+offset_bottom = 280.0
+scale = Vector2(0.5, 0.5)
+icon = SubResource("AtlasTexture_iywne")
+flat = true
+metadata/_edit_group_ = true
+
+[node name="Button2" type="Button" parent="."]
+texture_filter = 1
+offset_left = 672.0
+offset_top = 208.0
+offset_right = 744.0
+offset_bottom = 280.0
+scale = Vector2(0.5, 0.5)
+icon = SubResource("AtlasTexture_iywne")
+flat = true
+metadata/_edit_group_ = true
+
+[connection signal="pressed" from="Button" to="Player" method="_on_button_pressed"]

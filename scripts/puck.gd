@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @export var speed := 4
 var offset_dir: float = 0.
+
 @onready var charge_circle = $"../UI/ChargeCircle"
 @onready var charge_circle_2 = $"../UI/ChargeCircle2"
 
@@ -24,15 +25,14 @@ func _physics_process(delta):
 		velocity.y += offset_dir
 		offset_dir = 0
 		velocity = velocity.clamp(Vector2(-15, -15), Vector2(15, 15))
-		
 	pass
 
 #This is a signal, but it's just an overlap for a hitbox (Area2D)
 func _on_area_2d_body_entered(body):
 	velocity.x += 0.5
-	if body.name == "Player":
+	if body.name == "Player": #player1 or p1
 		# Fire the signal with the params
-		charge_circle.gained_charge.emit("p1")
+		GameManager.gain_charge.emit("p1")
 	else:
-		charge_circle_2.gained_charge.emit("p2")
+		GameManager.gain_charge.emit("p2")
 	pass # Replace with function body.

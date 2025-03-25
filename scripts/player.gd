@@ -10,7 +10,7 @@ var shot_charge := 0.0
 @onready var button:Button = $"../UI/Button"
 @onready var button2:Button = $"../UI/Button2"
 
-var dimensions: Rect2
+signal player_gain_charge(who: String, amount: int, can_fire: bool)
 
 var touch_events = {
 	"p1": {
@@ -24,13 +24,16 @@ var touch_events = {
 }
 
 func _ready():
+	if not player2:
+		GameManager.p1 = self
+	else:
+		GameManager.p2 = self
+	
 	var p1handle_fire = func(): return handle_fire(false)
 	var p2handle_fire = func(): return handle_fire(true)
 	button.pressed.connect(p1handle_fire)
 	button2.pressed.connect(p2handle_fire)
-	
-	#might need this
-	dimensions = $CollisionShape2D.shape.get_rect()
+	player_gain_charge.connect(gain_charge)
 
 func _physics_process(delta):
 	velocity.y = handle_input_dir() * speed * delta
@@ -96,11 +99,27 @@ func _input(event: InputEvent):
 	
 func handle_fire(p2):
 	if not p2:
-		print("Fire")
+		# TODO: Maybe change paddle color, do some shit
+		if shot_enabled:
+			GameManager.gain_charge.emit("p1", true)
+			print("Fire1")
 	else:
-		print("Fire2")
+		# TODO: Maybe change paddle color, do some shit
+		if shot_enabled:
+			GameManager.gain_charge.emit("p2", true)
+			print("Fire2")
 	pass
-
+	
+func gain_charge(who: String, amount: int, can_fire: bool):
+	if who != "p2" and not player2:
+		shot_charge = amount
+		shot_enabled = can_fire
+	else:
+		shot_charge = amount
+		shot_enabled = can_fire
+		
+	print(who + " shot_charge = " + str(amount) + " " + " \n shot_enabled = " + str(shot_enabled))
+	pass
 
 func _on_top_hitbox_body_entered(body):
 	body.offset_dir = -1

@@ -4,9 +4,8 @@ extends TextureRect
 
 var atlas_region:Rect2 = texture.region
 var charge_percent := 0
-var times_run = 0
 
-#only on the X axis
+#only on the X axis (this is to control which section of the texture to render)
 var region_coords = {
 	0: 832,
 	25: 896,
@@ -14,26 +13,20 @@ var region_coords = {
 	75: 1024,
 	100: 1280
 }
-#define custom signal
-signal gained_charge(who)
 
-# hook a function to it when the thing's instantiated
+signal gained_charge(who, amount)
+
 func _ready():
 	gained_charge.connect(gain_charge)
-
-# do shit
-func gain_charge(who):
-	var gm_charge_state = GameManager.charge_states[who].charge_level
-	charge_percent = gm_charge_state
-	
-	if (gm_charge_state < 100):
-		gm_charge_state += 25
+	if not player2:
+		GameManager.charge_circle = self
 	else:
-		gm_charge_state = 0
-		
-	GameManager.charge_states[who].charge_level = gm_charge_state
-	
+		GameManager.charge_circle_2 = self
+
+func gain_charge(who, amount):
+	print(who + "gained_charge signal fired")
+	charge_percent = amount
 	if who == "p2" and player2:
-		texture.region.position.x = region_coords[GameManager.charge_states[who].charge_level]
-	else: 
-		texture.region.position.x = region_coords[GameManager.charge_states[who].charge_level]
+		texture.region.position.x = region_coords[charge_percent]
+	else:
+		texture.region.position.x = region_coords[charge_percent]
